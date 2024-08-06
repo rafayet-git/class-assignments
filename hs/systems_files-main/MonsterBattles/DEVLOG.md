@@ -1,0 +1,23 @@
+# Developer Log                                                                 
+
+| Date  |      Name       |                                                                                               Progress                                                                                                |
+| :---: | :-------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|  1/5  |  Jeffrey Jiang  |                                                          Began working on TUI library. Created  `StyleChar` struct and associated functions                                                           |
+|  1/6  |  Jeffrey Jiang  |                                                            Continued work on TUI library. Create `Canvas` struct and associated functions                                                             |
+|  1/6  | Rafayet Hossain |                                                                    Began working on socket code. Created `create_socket` function.                                                                    |
+|  1/7  |  Jeffrey Jiang  |                                       Continued work on TUI library. Created `InstructionNode`, `InstructionQueue`, associated functions, and preset functions                                        |
+|  1/7  | Rafayet Hossain |                                                         Continued working on socket code. Created `AddressInf` struct and updated functions.                                                          |
+|  1/8  |  Jeffrey Jiang  | Completed a large portion of the TUI library. Created `Preset.h` with preset canvas generation functions, improved upon other structs, and completed `WindowContext` struct with associated functions |
+|  1/9  |  Jeffrey Jiang  |                                  Worked on the game logic for tic-tac-toe (TTT) in TTT directory. Involves writing `TTTClient` which wraps a `WindowContext` struct                                   |
+|  1/9  | Rafayet Hossain |                                                        Continued working on socket code. Created `server_connect`, `server_recieve` functions.                                                        |
+| 1/10  |  Jeffrey Jiang  | Began working on the structs used in the monster battling section including `MonsterData`, `BattleData`, and more. Also created a tool in `BattleTool.c` that saved moves and monsters to a data file |
+| 1/10  | Rafayet Hossain |                                                          Finished working on socket code with updated functions listed in `SocketConnect.h`                                                           |
+| 1/11  |  Jeffrey Jiang  |                                               Worked on `Player` struct. Began planning for the `BattleClient` struct that manages the TUI and the game                                               |
+| 1/12  |  Jeffrey Jiang  |                                 Worked on the major TUI elements of the final product. Wrote many TUI associated functions in `BattleClient.h` and `CustomPreset.h`.                                  |
+| 1/12  | Rafayet Hossain |                                     Started working on the full TTT program. Updated `server_recieve_connection` and `client_make_connection` for error catching.                                     |
+| 1/13  |  Jeffrey Jiang  |              Mainly worked on the gameplay loop for the final product. Completed various TUI elements such as `update_team_display` and fixed various bugs. Also implemented save files               |
+| 1/14  |  Jeffrey Jiang  |              Worked on the gameplay loop especially the battle portion through setting up the socket connection. Also fixed bugs throughout code including a memory leak using valgrind               |
+| 1/14  | Rafayet Hossain |                                                Continued working on TTT. Updated functions on `SocketConnect.c` to fix printing with `PRINTF()` macro.                                                |
+| 1/15  | Rafayet Hossain |                                                                                Worked on TTT build for socket testing.                                             |
+| 1/16  |  Jeffrey Jiang  |                                                               Fixed a bunch of bugs and added some more small features. Updated README                                                                |
+| 1/16 | Rafayet Hossain | Added localhost IP catch case. Fixed potential double freeing issue on `Instruction.c`. |
