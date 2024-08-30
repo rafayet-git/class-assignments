@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link href="styles.css" rel="stylesheet">
+        <title>Trivia!</title>
+        <script>
+        // update html in event
+        document.addEventListener('DOMContentLoaded', function(){
+            //part 1 correct answer
+            let tru1 = document.querySelector('.correct');
+            tru1.addEventListener('click', function() {
+                tru1.style.background = 'green';
+                document.querySelector('#result1').innerHTML = 'Wow you got it right!';
+            });
+            // part 1 incorrect answers
+            let fals1 = document.querySelector('.incorrect1');
+            fals1.addEventListener('click', function() {
+                fals1.style.background = 'red';
+                document.querySelector('#result1').innerHTML = 'You stupid';
+            });
+            let fals2 = document.querySelector('.incorrect2');
+            fals2.addEventListener('click', function() {
+                fals2.style.background = 'red';
+                document.querySelector('#result1').innerHTML = 'This is not a string';
+            });
+            let fals3 = document.querySelector('.incorrect3');
+            fals3.addEventListener('click', function() {
+                fals3.style.background = 'red';
+                document.querySelector('#result1').innerHTML = 'That wont work lol';
+            });
+            //part 2 checker
+            let tru2 = document.querySelector('.check');
+            tru2.addEventListener('click', function() {
+                let tru3 = document.querySelector('input');
+                if (tru3.value == 6)
+                {
+                    tru3.style.backgroundColor = 'green';
+                    document.querySelector('#result2').innerHTML = 'Hey I like 6 too!';
+                } else {
+                    tru3.style.backgroundColor = 'red';
+                    document.querySelector('#result2').innerHTML = 'Ew! I hate '+tru3.value +'!';
+                }
+            });
+
+        });
+
+        </script>
+    </head>
+    <body>
+        <div class="header">
+            <h1>Trivia!</h1>
+        </div>
+
+        <div class="container">
+            <div class="section">
+                <h2>Part 1: Multiple Choice </h2>
+                <hr>
+                     <h3>What's 9 + 10?</h3>
+                     <button class="incorrect1">21</button>
+                     <button class="incorrect2">910</button>
+                     <button class="correct">19</button>
+                     <button class="incorrect3">NaN</button>
+                     <h4 id="result1"></h4>
+            </div>
+
+            <div class="section">
+                <h2>Part 2: Free Response</h2>
+                <hr>
+                    <h3>What's your favorite number?</h3>
+                    <input id="ans" placeholder="A number" type="number"></input>
+                    <button class='check' type="submit">Check</button>
+                    <h4 id="result2"></h4>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,13 @@
+sort1 uses: bubblesort
+
+How do you know?: reversed 5-6s,sorted 0s, random 7s this sort is the fastest for sorted so it is bubble sort
+
+sort2 uses: mergesort
+
+How do you know?: reversed 0s, sorted 0s, random 0s mergsort is the fastest sort + performs quickly regardless of being sorted, reversed, or random
+
+sort3 uses: selectionsort
+
+How do you know?: reversed 3s, sorted 3s, random 3s slow for all 3 cases and it is not mergesort or bubblesort, so its selection
+
+

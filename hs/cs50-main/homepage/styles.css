@@ -1,0 +1,29 @@
+html {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+   }
+
+   h1 {
+    font-family: 'Arial Black',sans-serif;
+   }
+
+   h3 {
+    font-family: 'Arial Black',sans-serif;
+   }
+
+   h2 {
+    font-family: 'Arial Black',sans-serif;
+   }
+
+   p {
+   font-family: 'Segoe UI Symbol',sans-serif;
+   }
+
+
+body {
+    text-align: center;
+    background-color: gray;
+    font-family:"Verdana", "sans-serif";
+    font-style: normal;
+  }
