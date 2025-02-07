@@ -1,15 +1,23 @@
 #include "Inventory.hpp"
 
-Inventory::Inventory(const std::vector<std::vector<Item>>& items, Item* equipped){
-
+Inventory::Inventory(const std::vector<std::vector<Item>>& items, Item* equipped) : 
+    inventory_grid_(items), equipped_(equipped), weight_(0), item_count_(0) {
+    for (const auto& row : items){
+        for (const auto& item : row){
+            if (item.type_ != NONE){
+                weight_ += item.weight_;
+                item_count_++;
+            }
+        }
+    }
 }
 
 Item* Inventory::getEquipped() const{
-
+    return equipped_;
 }
 
 void Inventory::equip(Item* itemToEquip){
-
+    equipped_ = itemToEquip;
 }
 
 void Inventory::discardEquipped(){
@@ -56,6 +64,6 @@ Inventory& Inventory::operator=(Inventory&& rhs){
 }
 
 Inventory::~Inventory(){
-
+    delete equipped_;
 }
 
