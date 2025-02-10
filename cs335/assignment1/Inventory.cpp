@@ -17,12 +17,14 @@ Item* Inventory::getEquipped() const{
 }
 
 void Inventory::equip(Item* itemToEquip){
-    std::swap(equipped_, itemToEquip);
+    equipped_ = itemToEquip;
 }
 
 void Inventory::discardEquipped(){
-    delete equipped_;
-    equipped_ = nullptr;
+    if (equipped_ != nullptr){
+      delete equipped_;
+      equipped_ = nullptr;
+    }
 }
 
 std::vector<std::vector<Item>> Inventory::getItems() const{
@@ -38,13 +40,13 @@ size_t Inventory::getCount() const{
 
 
 Item Inventory::at(const size_t& row, const size_t& col) const{
-    if (row < 0 || row >= inventory_grid_.size() || col < 0 || col >= inventory_grid_[0].size())
+    if (row < 0 || row >= inventory_grid_.size() || col < 0 || col >= inventory_grid_[row].size())
         throw std::out_of_range("at() Out of bounds");
     return inventory_grid_[row][col];
 }
 
 bool Inventory::store(const size_t& row, const size_t& col, const Item& pickup){
-    if (row < 0 || row >= inventory_grid_.size() || col < 0 || col >= inventory_grid_[0].size())
+    if (row < 0 || row >= inventory_grid_.size() || col < 0 || col >= inventory_grid_[row].size())
         throw std::out_of_range("store() Out of bounds");
     if (inventory_grid_[row][col].type_ != NONE) return false;
     inventory_grid_[row][col] = pickup;
