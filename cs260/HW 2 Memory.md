@@ -43,11 +43,3 @@
    I got this by multiplying the amount of integers in a foo_t by 8, which moves from bar[0] to bar[8]. Then i added 100 to skip the bar[8].x array, which gives us bar[8].var1.
 
 8. It is going down in memory. This is because of the address of foo, which was allocated first, is `0x753de0`, but the address of var2 that was allocated later is `0x753db4`, which is less.
-
-
-
-
-
-
-
-
