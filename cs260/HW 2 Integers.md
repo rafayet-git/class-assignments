@@ -1,10 +1,10 @@
 ### Alias: corbato
 
-# Homework 2 Memory
+# Homework 2 Integers
 
 CFG:
 
-<img title="" src="file:///home/cart/Documents/class-assignments/cs260/1740336.png" alt="1740336.png" width="425">
+<img title="" src="1740336.png" alt="1740336.png" width="425">
 
 Code:
 

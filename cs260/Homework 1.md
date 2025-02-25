@@ -59,13 +59,13 @@
 5. Power = clock$^2$ (hz)
    
    $$
-   \frac{70\text{W}}{140\text{W}} = \left( \frac{\text{Clock}}{4*10^9} \right)^2  \hspace{10cm}
-\\[5px] \sqrt{0.5} = 0.707 = \frac{\text{Clock}}{4*10^9} \hspace{10cm}
-\\[5px] \frac{0.707}{4*10^9} = 2.83*10^9 = 2.83 \text{GHz} \hspace{10cm}
+   \frac{70\text{W}}{140\text{W}} = \left( \frac{\text{Clock}}{4*10^9} \right)  \hspace{10cm}
+\\[5px] 0.5 = \frac{\text{Clock}}{4*10^9} \hspace{10cm}
+\\[5px] \frac{0.5}{4*10^9} = 2*10^9 = 2 \text{GHz} \hspace{10cm}
    $$
    
     Calculate new mips using previously calculated 4.5CPI
    
    $$
-   2.83*10^9 \text{ Hz} /4.5 \text{ CPI} = 6.28*10^8 \text{ IPS} = \textbf{628 MIPS}\hspace{10cm}
+   2*10^9 \text{ Hz} /4.5 \text{ CPI} = 4.44*10^8 \text{ IPS} = \textbf{444 MIPS}\hspace{10cm}
    $$
