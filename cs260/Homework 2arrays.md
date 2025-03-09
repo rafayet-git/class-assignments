@@ -19,3 +19,5 @@ lw   $t3, 0($s2)      # t3 <- *p
 sub  $t0, $t2, $t3    # t0 <- a[2*k+5] - (*p)
 sw   $t0, 0($t1)      # a[4*k] <- a[2*k+5] - (*p)
 ```
+
+Did not use offset for lw
