@@ -6,6 +6,10 @@ CFG:
 
 ![Robot.png](./Robot.png)
 
+Bit 15 of 4(x)?
+
+Need to be more specific - Set bit n of 4(x)
+
 Code:
 
 ```
@@ -14,6 +18,8 @@ init:   li    $t0, 0xCDEF1488    # t0 <- addr of arm controller
 
 LReady: lw    $t1, 4($t0)        # t1 <- arm addr 0xCD..8C
         andi  $t2, $t1, 0x8000   # t2 <- get bit 15 of arm
+        # Correction: 0x7fff, set bit 13 == 0 => clear it
+
         bne   $t2, $zero, LReady # iterate if arm is not ready
 
 LR_end: addi  $t2, $zero, 0      # t2 <- 0 
