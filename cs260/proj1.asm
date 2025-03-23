@@ -23,7 +23,7 @@ loopBG:		sw   $t3,0($t1)		# bitmap pixel <- yellow
 checkInput:	la   $t1,M		# t1 <- addr of M
 		lw   $t2,0($t1)		# t2 <- M
 		lw   $t3,4($t1)		# t3 <- N
-		slti $t4,$t2,256	# t4 <- 1 if M < 256 (height), else t4 <- 0
+		slti $t4,$t2,241	# t4 <- 1 if M < 241 (height - overhang), else t4 <- 0
 		beq  $t4,$zero,endCode	# exit code if invalid input
 		slt  $t4,$t3,$t2	# t4 <- 1 if N < M, else t4 <- 0
 		beq  $t4,$zero,endCode	# exit code if invalid input
@@ -34,9 +34,26 @@ checkInput:	la   $t1,M		# t1 <- addr of M
 		# Check if centerable by checking bit 0 for even value.
 		andi $t4,$t2,0x0001	# t4 <- 0 if M is even, else t4 <- 1
 		bne  $t4,$zero,endCode	# exit code if invalid input
-		andi $t4,$t3,0x0001	# t4 <- 0 if N is even, else t4 <- 1
-		bne  $t4,$zero,endCode	# exit code if invalid input
-calcRGB:
+		
+calcRGB:	addi $t7,$zero,0	# t7 <- arrow color (0,0,0)
+		addi $t6,$zero,0	# t6 <- arrowhead color (0,0,0)
+		addi $t1,$t1,8		# t1 <- addr of cr
+		addi $t2,$t1,8		# t2 <- addr of cb
+loopRGB:	lw   $t3,0($t1)		# t3 <- addr of crgb value 
+		sll  $t7,$t7,8		# t7 <- shift color to next field
+		sll  $t6,$t6,8		# t6 <- shift color to next field
+		add  $t7,$t7,$t3	# t7 <- color (-,-,crgb)
+		sll  $t3,$t3,2		# t3 <- crgb*4
+		slti $t4,$t3,256	# t4 <- 1 if crgb*4 < 256, else t4 <- 0
+		beq  $t4,$zero,setRGB 	# branch if invalid color 
+retRGB:		add  $t6,$t6,$t3	# t6 <- color (-,-,crgb*4)
+		beq  $t1,$t2,draw	# exit loop if t6,t7 colors are fully set
+		addi $t1,$t1,4		# t1 <- addr of next crgb value
+		j    loopRGB		# iterate
+setRGB:		addi $t3,$zero,255	# t3 <- largest crgb value
+		j retRGB		# return to loop
+		
+draw:
 
 endCode:	li $v0,10	# exit code
 		syscall 	# exit to OS
