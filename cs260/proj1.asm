@@ -31,29 +31,31 @@ checkInput:	la   $t1,M		# t1 <- addr of M
 		beq  $t4,$zero,endCode	# exit code if invalid input
 		slt  $t4,$zero,$t2	# t4 <- 1 if 0 < M, else t4 <- 0
 		beq  $t4,$zero,endCode	# exit code if invalid input
-		# Check if centerable by checking bit 0 for even value.
-		andi $t4,$t2,0x0001	# t4 <- 0 if M is even, else t4 <- 1
+		# Check if centerable by checking if M and N are divisible by 4 (account for arrowhead width)
+		andi $t4,$t2,0x0003	# t4 <- 0 if 4 divides M, else t4 <- 1
 		bne  $t4,$zero,endCode	# exit code if invalid input
-		
-calcRGB:	addi $t7,$zero,0	# t7 <- arrow color (0,0,0)
-		addi $t6,$zero,0	# t6 <- arrowhead color (0,0,0)
+		andi $t4,$t3,0x0003	# t4 <- 0 if 4 divides N, else t4 <- 1
+		bne  $t4,$zero,endCode	# exit code if invalid input
+
+calcRGB:	addi $t9,$zero,0	# t9 <- arrow color (0,0,0)
+		addi $t8,$zero,0	# t8 <- arrowhead color (0,0,0)
 		addi $t1,$t1,8		# t1 <- addr of cr
 		addi $t2,$t1,8		# t2 <- addr of cb
-loopRGB:	lw   $t3,0($t1)		# t3 <- addr of crgb value 
-		sll  $t7,$t7,8		# t7 <- shift color to next field
-		sll  $t6,$t6,8		# t6 <- shift color to next field
-		add  $t7,$t7,$t3	# t7 <- color (-,-,crgb)
+loopRGB:	lw   $t3,0($t1)		# t3 <- crgb value 
+		sll  $t9,$t9,8		# t9 <- shift color to next field
+		sll  $t8,$t8,8		# t8 <- shift color to next field
+		add  $t9,$t9,$t3	# t9 <- color (-,-,crgb)
 		sll  $t3,$t3,2		# t3 <- crgb*4
 		slti $t4,$t3,256	# t4 <- 1 if crgb*4 < 256, else t4 <- 0
 		beq  $t4,$zero,setRGB 	# branch if invalid color 
-retRGB:		add  $t6,$t6,$t3	# t6 <- color (-,-,crgb*4)
+retRGB:		add  $t8,$t8,$t3	# t8 <- color (-,-,crgb*4)
 		beq  $t1,$t2,draw	# exit loop if t6,t7 colors are fully set
 		addi $t1,$t1,4		# t1 <- addr of next crgb value
 		j    loopRGB		# iterate
 setRGB:		addi $t3,$zero,255	# t3 <- largest crgb value
-		j retRGB		# return to loop
-		
+		j    retRGB		# return to loop
+
 draw:
 
-endCode:	li $v0,10	# exit code
+endCode:	li   $v0,10	# exit code
 		syscall 	# exit to OS

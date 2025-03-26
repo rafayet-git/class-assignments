@@ -3,7 +3,7 @@
 # Homework 2 Funcode
 
 ```
-mask:  .word 0xFFFFF83F       # zero bits: 6-10, one bits: 1-5,11-31
+mask:  .word 0xFFFFF83F       # zero bits: 6-10, one bits: 0-5,11-31
 start: la    $t0, mask        # t0 <- addr of mask
        lw    $t0, 0($t0)      # t0 <- mask
        la    $t3, shftr       # t3 <- addr of shftr sll instruction
