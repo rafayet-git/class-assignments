@@ -1,11 +1,11 @@
 .data
 # DONOTMODIFYTHISLINE
 frameBuffer: 	.space 0x80000	# 512 wide X 256 high pixels
-M:		.word  100
-N:		.word  76
-cr:		.word  10
-cg:		.word  64
-cb:		.word  10
+M:		.word  200
+N:		.word  128
+cr:		.word  43
+cg:		.word  192
+cb:		.word  59
 # DONOTMODIFYTHISLINE
 # Your other variables go BELOW here only
 .text
@@ -40,8 +40,6 @@ checkInput:	slti $t4,$s1,241	# t4 <- 1 if M <= 240 (height - overhang), else t4 
 		bne  $t4,$zero,endCode	# exit code if invalid input
 		andi $t4,$s2,0x0003	# t4 <- 0 if 4 divides N, else t4 <- 1
 		bne  $t4,$zero,endCode	# exit code if invalid input
-
-
 
 calcRGB:	addi $t9,$zero,0	# t9 <- arrowhead color (0,0,0)
 		addi $t8,$zero,0	# t8 <- arrow color (0,0,0)
@@ -110,29 +108,21 @@ endDHBIn:	addi $t0,$t0,4		# t0 <- bitmap[row][col+1]
 		addi $t1,$t1,1		# t1 <- t1+1
 		j    loopDHBOut		# iterate
 
-#outer loop:
-#if t3=0 exit loop
-#	inner loop:
-# 	if i<t3 false, exit loop
-#	sw t4
-#	t4 + 2048
-# 	i++
-# 	repeat
-# t3 -= 2
-# t0 + 2052
-# t4 = t0
-# repeat
-drawAHead:	addi $t0,$t0,-16384	# t0 <- bitmap[row-8][col]
+drawHead:	addi $t0,$t0,-16384	# t0 <- bitmap[row-8][col]
 		add  $t4,$t0,$zero	# t4 <- bitmap[row-8][col]
-		addi $t3,$t3,16		# t3 <- (M-N)+16
-		
-loopDAHOut:
-loopDAHIn:
-endDAHIn:
-		sw   $t9,0($t4)
-		sw   $t9,4($t4)
-		sw   $t9,8($t4)
-		sw   $t9,12($t4)
-		
+		addi $t3,$t3,16		# t3 <- (M-N)+16	
+loopDAHOut:	beq  $t3,$zero,endCode	# exit loop if arrow drawn
+		add  $t1,$zero,$zero	# t1 <- 0
+loopDAHIn:	slt  $t5,$t1,$t3	# t5 <- 1 if t1 < t3, else t5 <- 0
+		beq  $t5,$zero,endDAHIn	# exit loop if line drawn
+		sw   $t9,0($t4)		# bitmap pixel <- arrow color
+		addi $t4,$t4,2048	# t4 <- bitmap[row+1][col]
+		addi $t1,$t1,1		# t1 <- t1+1
+		j loopDAHIn		# iterate
+endDAHIn:	addi $t3,$t3,-2		# t3 <- t3-2
+		addi $t0,$t0,2052	# t0 <- bitmap[row+1][col+1]
+		add  $t4,$t0,$zero	# t4 <- bitmap[row+1][col+1]
+		j loopDAHOut		# iterate
+
 endCode:	li   $v0,10	# exit code
 		syscall 	# exit to OS
