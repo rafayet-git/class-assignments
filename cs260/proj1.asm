@@ -27,7 +27,7 @@ loopBG:		sw   $t2,0($t0)		# bitmap pixel <- yellow
 		j    loopBG		# iterate
 		
 		# Check M and N if they are within range
-checkInput:	slti $t4,$s1,241	# t4 <- 1 if M <= 240 (height - overhang), else t4 <- 0
+checkInput:	slti $t4,$s1,245	# t4 <- 1 if M <= 244 (height - overhang), else t4 <- 0
 		beq  $t4,$zero,endCode	# exit code if invalid input
 		slt  $t4,$s2,$s1	# t4 <- 1 if N < M, else t4 <- 0
 		beq  $t4,$zero,endCode	# exit code if invalid input
@@ -61,19 +61,22 @@ setRGB:		addi $t2,$zero,255	# t2 <- largest crgb value
 
 center:		addi $t1,$zero,256	# t1 <- 256
 		addi $t2,$s1,8		# t2 <- M+8
-		sub  $t0,$t1,$t2	# t0 <- 256-(M+8)
+		slti $t6,$s2,8		# t6 <- 1 if N < 8, else t6 <- 0
+		bne  $t6,$zero,centIf	# update t2 for arrowhead length
+centRet:	sub  $t0,$t1,$t2	# t0 <- 256-(M+8)
 		sll  $t0,$t0,10		# t0 <- bitmap row for centering arrow: (256-(M+8))/2 * 512
-		addi $t0,$t0,-2048	# t0 <- bitmap row-1
 		sub  $t3,$s1,$s2	# t3 <- M-N
 		srl  $t1,$t3,1		# t1 <- (M-N)/2
 		add  $t1,$t1,$t2	# t1 <- (M-N)/2 + M+8
 		addi $t2,$zero,512      # t2 <- 512
 		sub  $t1,$t2,$t1	# t1 <- 512 - ((M-N)/2 + M+8)
 		sll  $t1,$t1,1		# t1 <- bitmap column for centering arrow: (512 - ((M-N)/2 + M+8))/2 * 4
-		add  $t1,$t1,-4		# t1 <- bitman column - 1
 		add  $t0,$s0,$t0	# t0 <- bitmap[row][0]
 		add  $t0,$t1,$t0	# t0 <- bitmap[row][col]
-		
+		j    drawVBox		# exit to next part
+centIf:		sub  $t2,$t2,$s2	# t2 <- M+8-N
+		j    centRet		# return back to calculate center
+
 drawVBox:	add  $t1,$zero,$zero	# t1 <- 0
 		add  $t4,$t0,$zero	# t4 <- bitmap[row][col]
 loopDVBOut:	slt  $t5,$t1,$t3	# t5 <- 1 if t1 < M-N, else t5 <- 0
