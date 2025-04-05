@@ -1,5 +1,18 @@
 #include "Compare.hpp"
 
+bool CompareItemName::lessThan(const Item& a, const Item& b)
+{
+    return a.name_ < b.name_;
+}
+bool CompareItemName::equal(const Item& a, const Item& b)
+{
+    return a.name_ == b.name_;
+}
+bool CompareItemName::leq(const Item& a, const Item& b)
+{
+    return lessThan(a, b) || equal(a, b);
+}
+
 bool CompareItemWeight::lessThan(const Item& a, const Item& b)
 {
     return a.weight_ < b.weight_;
