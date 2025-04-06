@@ -155,16 +155,13 @@ Inventory<Comparator, std::unordered_set<Item>>::query(const Item& start,
 {
     // Based off Inventory::query
     std::unordered_set<Item> res;
-    if (Comparator::lessThan(end, start)) {
-        return res;
-    }
+    if (Comparator::lessThan(end, start)) return res;
+
     std::for_each(items_.begin(),
         items_.end(),
         [&start, &end, &res, this](const Item& i) {
             bool isMatching = Comparator::leq(start, i) && Comparator::leq(i, end);
-            if (isMatching) {
-                matching.insert(i);
-            }
+            if (isMatching) res.insert(i);
         });
     return res;
 }

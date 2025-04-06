@@ -142,20 +142,24 @@ ItemAVL<Comparator>::~ItemAVL()
 template <class Comparator>
 bool ItemAVL<Comparator>::contains(const std::string& target) const
 {
-    // Your code here
+    return contains(target, root_);
 }
 
 /**
  * @brief Internal routine to check if a subtree contains an item with a given name
  *
- * @param name The name to check for
+ * @param target The name to check for
  * @param subroot The root of the subtree to be searched
  * @return True if a matching Item exists, false otherwise.
  */
 template <class Comparator>
 bool ItemAVL<Comparator>::contains(const std::string& target, const Node* subroot) const
 {
-    // Your code here.
+    if (subroot == nullptr) return false;
+    if (subroot->value_.name_ == target) return true;
+    return contains(target, subroot->left_) ||
+           contains(target, subroot->right_);
+    // optimize for ItemAVL<CompareItemName> ?
 }
 
 /**
