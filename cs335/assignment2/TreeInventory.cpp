@@ -164,9 +164,9 @@ void Inventory<Comparator, Tree>::queryHelper(const Item& start, const Item& end
     if (Comparator::leq(start, root->value_) && Comparator::leq(root->value_, end))
         result.insert(root->value_);
 
-    if (Comparator::lessThan(start, root->value_))
+    if (Comparator::leq(start, root->value_))
         queryHelper(start, end, root->left_, result);
-    if (Comparator::lessThan( root->value_, end))
+    if (Comparator::leq(root->value_, end))
         queryHelper(start, end, root->right_, result);
 
 }
