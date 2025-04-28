@@ -1,4 +1,5 @@
 #include "Leaderboard.hpp"
+#include <algorithm>
 
 /**
  * @brief Constructor for RankingResult with top players, cutoffs, and elapsed time.
@@ -39,12 +40,13 @@ RankingResult Offline::heapRank(std::vector<Player>& players){
   
   auto start_time = std::chrono::high_resolution_clock::now(); // timer start
   std::make_heap(players.begin(), players.end());
-
-  //...
+  for (auto it = players.end(); it != players.end()-tops; --it){
+    std::pop_heap(players.begin(), it);
+  }
   auto end_time = std::chrono::high_resolution_clock::now(); // timer end
   std::chrono::duration<double, std::milli> duration = end_time - start_time;
   
   // Sorted items are at end of players
-  return RankingResult(std::vector<Player>(players.end()-tops,players.end()), {}, duration.count);
+  return RankingResult(std::vector<Player>(players.end()-tops,players.end()), {}, duration.count());
   
 }

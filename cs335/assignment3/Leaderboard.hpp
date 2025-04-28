@@ -5,6 +5,8 @@
 
 #include <iterator>
 #include <chrono>
+#include <cmath>
+#include <algorithm>
 #include <unordered_map>
 #include <vector>
 
