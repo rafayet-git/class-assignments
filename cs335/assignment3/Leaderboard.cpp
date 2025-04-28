@@ -16,3 +16,35 @@ RankingResult::RankingResult(const std::vector<Player>& top, const std::unordere
     , elapsed_ { elapsed }
 {
 }
+
+/**
+ * @brief Uses an early-stopping version of heapsort to
+ *        select and sort the top 10% of players in-place
+ *        (excluding the returned RankingResult vector)
+ *
+ * @param players A reference to the vector of Player objects to be ranked
+ * @return A Ranking Result object whose
+ * - top_ vector -> Contains the top 10% of players from the input in sorted order (ascending)
+ * - cutoffs_    -> Is empty
+ * - elapsed_    -> Contains the duration (ms) of the selection/sorting operation
+ *
+ * @post The order of the parameter vector is modified.
+ */
+RankingResult Offline::heapRank(std::vector<Player>& players){
+  if (players.empty())
+    return RankingResult({},{},0);
+
+  int tops = std::floor(0.1*players.size());
+  if (tops == 0) tops++;
+  
+  auto start_time = std::chrono::high_resolution_clock::now(); // timer start
+  std::make_heap(players.begin(), players.end());
+
+  //...
+  auto end_time = std::chrono::high_resolution_clock::now(); // timer end
+  std::chrono::duration<double, std::milli> duration = end_time - start_time;
+  
+  // Sorted items are at end of players
+  return RankingResult(std::vector<Player>(players.end()-tops,players.end()), {}, duration.count);
+  
+}
