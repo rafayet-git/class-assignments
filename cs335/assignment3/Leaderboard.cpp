@@ -1,5 +1,4 @@
 #include "Leaderboard.hpp"
-#include <algorithm>
 
 /**
  * @brief Constructor for RankingResult with top players, cutoffs, and elapsed time.
