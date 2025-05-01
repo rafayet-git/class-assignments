@@ -215,8 +215,8 @@ RankingResult Online::rankIncoming(PlayerStream& stream, const size_t& reporting
   if (count % reporting_interval != 0)
     cutoffs[count] = players[0].level_;
 
-  std::sort(players.begin(),players.end());
-  //std::sort_heap(players.begin(), players.end(), std::greater<Player>());
+  std::sort_heap(players.begin(), players.end(), std::greater<Player>());
+  std::reverse(players.begin(), players.end());
   
   auto end_time = std::chrono::high_resolution_clock::now(); // timer end
   std::chrono::duration<double, std::milli> duration = end_time - start_time;
