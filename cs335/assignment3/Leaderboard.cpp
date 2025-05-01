@@ -79,3 +79,118 @@ RankingResult Offline::quickSelectRank(std::vector<Player>& players){
 
   return RankingResult(std::vector<Player>(players.begin()+tops,players.end()), {}, duration.count());
 }
+
+/**
+ * @brief A helper method that replaces the minimum element
+ * in a min-heap with a target value & preserves the heap
+ * by percolating the new value down to its correct position.
+ *
+ * Performs in O(log N) time.
+ *
+ * @pre The range [first, last) is a min-heap.
+ *
+ * @param first An iterator to a vector of Player objects
+ *      denoting the beginning of a min-heap
+ *      NOTE: Unlike the textbook, this is *not* an empty slot
+ *      used to store temporary values. It is the root of the heap.
+ *
+ * @param last An iterator to a vector of Player objects
+ *      denoting one past the end of a min-heap
+ *      (i.e. it is not considering a valid index of the heap)
+ *
+ * @param target A reference to a Player object to be inserted into the heap
+ * @post
+ * - The vector slice denoted from [first,last) is a min-heap
+ *   into which `target` has been inserted.
+ * - The contents of `target` is not guaranteed to match its original state
+ *   (ie. you may move it).
+ */
+void Online::replaceMin(PlayerIt first, PlayerIt last, Player& target){
+  int hole = 0;
+  int child = 0;
+  int length = last - first;
+
+  for(; hole * 2 + 1 < length; hole = child){
+    child = hole * 2 + 1;
+    if (child + 1 < length && *(first + child+1) < *(first + child))
+      child++;
+    if (*(first + child) < target)
+      *(first + hole) = std::move(*(first + child));
+    else
+      break;  
+  }
+  *(first + hole) = std::move(target); 
+  
+}
+
+/**
+ * @brief Exhausts a stream of Players (ie. until there are none left) such that we:
+ * 1) Maintain a running collection of the <reporting_interval> highest leveled players
+ * 2) Record the Player level after reading every <reporting_interval> players
+ *    representing the minimum level required to be in the leaderboard at that point.
+ *
+ * @note You should use NOT use a priority-queue.
+ *       Instead, use a vector, the STL heap operations, & `replaceMin()`
+ *
+ * @param stream A stream providing Player objects
+ * @param reporting_interval The frequency at which to record cutoff levels
+ * @return A RankingResult in which:
+ * - top_       -> Contains the top <reporting_interval> Players read in the stream in
+ *                 sorted (least to greatest) order
+ * - cutoffs_   -> Maps player count milestones to minimum level required at that point
+ *                 including the minimum level after ALL players have been read, regardless
+ *                 of being a multiple of the reporting interval
+ * - elapsed_   -> Contains the duration (ms) of the selection/sorting operation
+ *                 excluding fetching the next player in the stream
+ *
+ * @post All elements of the stream are read until there are none remaining.
+ *
+ * @example Suppose we have:
+ * 1) A stream with 132 players
+ * 2) A reporting interval of 50
+ *
+ * Then our resulting RankingResult might contain something like:
+ * top_ = { Player("RECLUSE", 994), Player("WYLDER", 1002), ..., Player("DUCHESS", 1399) }, with length 50
+ * cutoffs_ = { 50: 239, 100: 992, 132: 994 } (see RankingResult explanation)
+ * elapsed_ = 0.003 (Your runtime will vary based on hardware)
+ */
+RankingResult Online::rankIncoming(PlayerStream& stream, const size_t& reporting_interval){
+  if (stream.remaining() == 0)
+    return RankingResult({},{},0);
+  std::vector<Player> players;
+  std::unordered_map<size_t, size_t> cutoffs;
+  int count = 0;
+
+  auto start_time = std::chrono::high_resolution_clock::now(); // timer start
+  // make players into min heap when at reporting_interval, then use replaceMin
+  // or if stream < reporting_interval
+  while (stream.remaining() > 0){
+    Player next = stream.nextPlayer();
+    count++;
+    if (players.size() < reporting_interval){
+      players.push_back(next);
+      if (players.size() == reporting_interval){
+        std::make_heap(players.begin(), players.end(), std::greater<Player>());
+      }
+    } else {
+      if (next > players.front()){
+        replaceMin(players.begin(), players.end(), next);
+      }
+    }
+    if (count % reporting_interval == 0){
+      cutoffs[count] = players.front().level_;
+    }
+  }
+  if (count < reporting_interval)
+    std::make_heap(players.begin(), players.end(), std::greater<Player>());
+  if (count % reporting_interval != 0)
+    cutoffs[count] = players.front().level_;
+
+  
+  std::sort_heap(players.begin(), players.end(), std::greater<Player>());
+  
+  auto end_time = std::chrono::high_resolution_clock::now(); // timer end
+  std::chrono::duration<double, std::milli> duration = end_time - start_time;
+  
+  return RankingResult(players, cutoffs, duration.count());
+}

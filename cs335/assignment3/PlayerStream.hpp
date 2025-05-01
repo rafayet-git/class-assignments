@@ -57,7 +57,14 @@ public:
 class VectorPlayerStream : public PlayerStream {
 private:
     // Your private members here. You're the designer now!
-
+    /**
+     * @brief A vector of player objects in the stream.
+     */
+    std::vector<Player> players_;
+    /**
+     * @brief The current index of the player stream.
+     */
+    size_t index_;
 public:
     /**
      * @brief Constructs a VectorPlayerStream from a vector of Players.

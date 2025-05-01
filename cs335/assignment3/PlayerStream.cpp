@@ -7,9 +7,8 @@
  *
  * @param players The vector of Player objects to stream.
  */
-VectorPlayerStream::VectorPlayerStream(const std::vector<Player>& players){
-
-}
+VectorPlayerStream::VectorPlayerStream(const std::vector<Player>& players)
+    : players_(players), index_(0) {}
 /**
  * @brief Retrieves the next Player in the stream.
  *
@@ -20,7 +19,9 @@ VectorPlayerStream::VectorPlayerStream(const std::vector<Player>& players){
  * @throws std::runtime_error If there are no more players remaining in the stream.
  */
 Player VectorPlayerStream::nextPlayer(){
-
+    if (index_ >= players_.size())
+        throw std::runtime_error("No players left.");
+    return players_[index_++];
 }
 /**
  * @brief Returns the number of players remaining in the stream.
@@ -28,5 +29,5 @@ Player VectorPlayerStream::nextPlayer(){
  * @return The count of players left to be read.
  */
 size_t VectorPlayerStream::remaining() const{ // see how many instances remaining to be fetched
-
+    return players_.size() - index_;
 }
