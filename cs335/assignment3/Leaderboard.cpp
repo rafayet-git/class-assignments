@@ -73,11 +73,43 @@ RankingResult Offline::quickSelectRank(std::vector<Player>& players){
   
   auto start_time = std::chrono::high_resolution_clock::now(); // timer start
   std::nth_element(players.begin(), players.begin()+tops, players.end());
-  //...
+  // sort
+  quickSort(players, tops-1, players.size()-1);
   auto end_time = std::chrono::high_resolution_clock::now(); // timer end
   std::chrono::duration<double, std::milli> duration = end_time - start_time;
-
   return RankingResult(std::vector<Player>(players.begin()+tops,players.end()), {}, duration.count());
+}
+
+/**
+ * @brief Helper function for quickSelectRank to perform quick sort.
+ *
+ * @param players A reference to the vector of Player objects to be ranked
+ * @param left The index to the leftmost item in the partition.
+ * @param right The index pointing to the rightmost item in the partition.
+ *
+ * @post A portion of the players is sorted.
+ */
+void Offline::quickSort(std::vector<Player>& players, int left, int right){
+  // based off 7.17
+   if (left < right){
+    // Just using median pivot
+    int pi = (left+right)/2;
+    std::swap(players[pi],players[right]);
+    Player& pivot = players[right];
+
+    int i = left-1, j = right;
+    for(;;){
+      while(players[++i] < pivot){}
+      while(pivot < players[--j]){}
+      if (i < j)
+        std::swap(players[i],players[j]);
+      else break;
+    }
+    std::swap(players[i],players[right]);
+    quickSort(players,left,i-1);
+    quickSort(players,i+1,right);
+
+  }
 }
 
 /**
@@ -169,25 +201,22 @@ RankingResult Online::rankIncoming(PlayerStream& stream, const size_t& reporting
     count++;
     if (players.size() < reporting_interval){
       players.push_back(next);
-      if (players.size() == reporting_interval){
-        std::make_heap(players.begin(), players.end(), std::greater<Player>());
-      }
+      std::push_heap(players.begin(), players.end(), std::greater<Player>());
     } else {
-      if (next > players.front()){
+      if (next > players[0]){
         replaceMin(players.begin(), players.end(), next);
       }
     }
     if (count % reporting_interval == 0){
-      cutoffs[count] = players.front().level_;
+      cutoffs[count] = players[0].level_;
     }
   }
-  if (count < reporting_interval)
-    std::make_heap(players.begin(), players.end(), std::greater<Player>());
-  if (count % reporting_interval != 0)
-    cutoffs[count] = players.front().level_;
 
-  
-  std::sort_heap(players.begin(), players.end(), std::greater<Player>());
+  if (count % reporting_interval != 0)
+    cutoffs[count] = players[0].level_;
+
+  std::sort(players.begin(),players.end());
+  //std::sort_heap(players.begin(), players.end(), std::greater<Player>());
   
   auto end_time = std::chrono::high_resolution_clock::now(); // timer end
   std::chrono::duration<double, std::milli> duration = end_time - start_time;

@@ -74,6 +74,17 @@ namespace Offline {
 RankingResult quickSelectRank(std::vector<Player>& players);
 
 /**
+ * @brief Helper function for quickSelectRank to perform quick sort.
+ *
+ * @param players A reference to the vector of Player objects to be ranked
+ * @param left The index to the leftmost item in the partition.
+ * @param right The index pointing to the rightmost item in the partition.
+ *
+ * @post A portion of the players is sorted.
+ */
+void quickSort(std::vector<Player>& players, int left, int right);
+
+/**
  * @brief Uses an early-stopping version of heapsort to
  *        select and sort the top 10% of players in-place
  *        (excluding the returned RankingResult vector)
