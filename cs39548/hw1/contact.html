@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title> Contact | Bob's Burgers</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex flex-col">
+    <header class="flex items-center justify-between bg-red-900 text-white w-full px-4 py-4">
+        <div class="logo flex items-center gap-3">
+            <img src="images/logo.jpg" alt="Logo" class="h-10 w-10 object-contain">
+            <h1 class="text-2xl font-bold">Bob's Burgers</h1>
+        </div>
+
+        <nav class="flex-1 flex justify-end">
+            <ul id="nav-links" class="flex gap-8 md:static md:flex-row md:gap-8 absolute top-16 left-0 w-full bg-red-900 md:bg-transparent flex-col items-center md:items-center md:w-auto z-50 hidden md:flex">
+                <li><a href="index.html" class="hover:text-yellow-400 block py-2">Home</a></li>
+                <li><a href="menu.html" class="hover:text-yellow-400 block py-2">Menu</a></li>
+                <li><a href="about.html" class="hover:text-yellow-400 block py-2">About</a></li>
+                <li><a href="contact.html" class="hover:text-yellow-400 block py-2">Contact</a></li>
+            </ul>
+            <button id="menu-btn" class="md:hidden block focus:outline-none ml-4" aria-label="Open Menu">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </nav>
+    </header>
+    
+    <main class="flex-1">
+        <!-- Your main content goes here -->
+        <section class="max-w-xl mx-auto mt-12 bg-white rounded-lg shadow-lg p-8">
+            <h2 class="text-2xl font-bold mb-6 text-red-900">Contact Us</h2>
+            <form id="contactForm" action="#" method="POST" class="flex flex-col gap-6">
+                <div>
+                    <label for="name" class="block text-sm font-semibold mb-2">Name</label>
+                    <input type="text" id="name" name="name" required class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-400">
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-semibold mb-2">Email</label>
+                    <input type="email" id="email" name="email" required class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-400">
+                </div>
+                <div>
+                    <label for="message" class="block text-sm font-semibold mb-2">Message</label>
+                    <textarea id="message" name="message" rows="5" required class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-400"></textarea>
+                </div>
+                <button type="submit" class="bg-red-900 text-white font-semibold py-2 px-6 rounded hover:bg-red-700 transition">Send Message</button>
+            </form>
+        </section>
+        <section class="max-w-xl mx-auto mt-8 bg-white rounded-lg shadow-lg p-8">
+            <h3 class="text-xl font-bold mb-4 text-red-900">Our Location</h3>
+            <div class="w-full h-64 rounded overflow-hidden">
+                <iframe
+                    src="https://www.google.com/maps?q=610+W+6th+Ave,+Anchorage,+AK+99501&output=embed"
+                    width="100%"
+                    height="100%"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="Google Maps Location"></iframe>
+                </div>
+        </section>
+        <script>
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for the message! Into the shredder it goes!');
+            });
+        </script>
+    </main>
+
+    <footer class="bg-red-900 text-white mt-12 px-4 py-6">
+        <div class="flex flex-col md:flex-row md:justify-between items-center gap-4">  
+            <div class="flex items-center gap-4">
+                <span>Follow us:</span>
+                <a href="https://www.facebook.com/RestaurantBusiness/" target="_blank" class="hover:text-yellow-400 flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current bi bi-facebook" viewBox="0 0 16 16">
+                    <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/>
+                </svg>
+                Facebook
+                </a>
+                <a href="https://www.instagram.com/top_nyc_restaurants/?hl=en" target="_blank" class="hover:text-yellow-400 flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg"  class="w-5 h-5 fill-current bi bi-instagram" viewBox="0 0 24 24">
+                        <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/>
+                    </svg>
+                    Instagram
+                </a>
+            </div>
+            <div>
+                <p class="text-sm">Business Hours: <span class="font-semibold">Mon-Friday: 10 AM - 12 PM</span></p>
+            </div>
+        </div>
+        <div class="text-center text-xs mt-4 opacity-70">
+            &copy; 2025 Rafayet Hossain
+        </div>
+    </footer>
+    <script>
+        const menuBtn = document.getElementById('menu-btn');
+        const navLinks = document.getElementById('nav-links');
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>

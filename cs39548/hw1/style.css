@@ -1,1 +1,19 @@
 @import "tailwindcss";
+body {
+    background-color: #7f1d1d; 
+}
+
+/* Ensure images are responsive */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Optional: Hide overflow for nav on mobile */
+@media (max-width: 767px) {
+    #nav-links {
+        left: 0;
+        right: 0;
+    }
+}
+
