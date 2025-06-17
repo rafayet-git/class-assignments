@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title> Contact | Bob's Burgers</title>
+    <title> Cart | Bob's Burgers</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="images/logo.jpg">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -39,44 +39,7 @@
     
     <main class="flex-1">
         <!-- Your main content goes here -->
-        <section class="max-w-xl mx-auto mt-12 bg-white rounded-lg shadow-lg p-8">
-            <h2 class="text-2xl font-bold mb-6 text-red-900">Contact Us</h2>
-            <form id="contactForm" action="#" method="POST" class="flex flex-col gap-6">
-                <div>
-                    <label for="name" class="block text-sm font-semibold mb-2">Name</label>
-                    <input type="text" id="name" name="name" required class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-400">
-                </div>
-                <div>
-                    <label for="email" class="block text-sm font-semibold mb-2">Email</label>
-                    <input type="email" id="email" name="email" required class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-400">
-                </div>
-                <div>
-                    <label for="message" class="block text-sm font-semibold mb-2">Message</label>
-                    <textarea id="message" name="message" rows="5" required class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-400"></textarea>
-                </div>
-                <button type="submit" class="bg-red-900 text-white font-semibold py-2 px-6 rounded hover:bg-red-700 transition">Send Message</button>
-            </form>
-        </section>
-        <section class="max-w-xl mx-auto mt-8 bg-white rounded-lg shadow-lg p-8">
-            <h3 class="text-xl font-bold mb-4 text-red-900">Our Location</h3>
-            <div class="w-full h-64 rounded overflow-hidden">
-                <iframe
-                    src="https://www.google.com/maps?q=610+W+6th+Ave,+Anchorage,+AK+99501&output=embed"
-                    width="100%"
-                    height="100%"
-                    style="border:0;"
-                    allowfullscreen=""
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"
-                    title="Google Maps Location"></iframe>
-                </div>
-        </section>
-        <script>
-            document.getElementById('contactForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                alert('Thank you for the message! Into the shredder it goes!');
-            });
-        </script>
+        
     </main>
 
     <footer class="bg-red-900 text-white mt-12 px-4 py-6">
