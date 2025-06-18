@@ -76,7 +76,63 @@
     </script>
     <script>
         function renderCart() {
-  
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const container = document.getElementById('cart-items');
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="flex items-center justify-center min-h-[40vh]">
+                        <p class="text-center text-lg font-bold text-white">Your cart is empty.</p>
+                    </div>
+                    <div class="flex items-center justify-center min-h-[1vh]">
+                        <a href="menu.html" class="text-center text-lg text-yellow-400 underline hover:text-yellow-500">Order food at the menu here.</a>
+                    </div>
+                `;
+                return;
+            }
+            let html = `
+                <div class="max-w-2xl mx-auto mt-8 bg-white rounded-lg shadow-lg p-8">
+                    <h2 class="text-2xl font-bold mb-6 text-red-900 text-center">Your Cart</h2>
+                    <div class="space-y-4">
+            `;
+            let total = 0;
+            cart.forEach((item, idx) => {
+                html += `
+                    <div class="flex items-center justify-between bg-red-200 rounded-lg shadow p-4">
+                        <div>
+                            <span class="font-semibold text-lg">${item.name}</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="font-bold text-red-900">$${((item.price || 0.00)).toFixed(2)}</span>
+                            <button class="delete-item bg-red-500 hover:bg-red-700 text-white px-3 py-1 rounded" data-idx="${idx}">Delete</button>
+                        </div>
+                    </div>
+                `;
+                total += (item.price || 0);
+            });
+            html += `
+                    </div>
+                    <div class="mt-6 text-right text-xl text-red-900 font-bold">
+                        Total: <span class="text-yellow-700">$${total.toFixed(2)}</span>
+                        <button id="clear-cart" class="bg-red-700 hover:bg-red-900 text-white px-4 py-2 rounded">
+                            Clear Cart
+                        </button>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+
+            document.querySelectorAll('.delete-item').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const idx = parseInt(this.dataset.idx);
+                    cart.splice(idx, 1);
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    renderCart();
+                });
+            });
+            document.getElementById('clear-cart').onclick = function() {
+                localStorage.removeItem('cart');
+                renderCart();
+            };
         }
         renderCart();
     </script>
