@@ -1,0 +1,10 @@
+- AI agents - achieving human-level intelligence, still very far
+- Machine learning Data-> model
+  - Requires generalization
+- Reflex based models - most common models, feed-forward
+- States - search problems- decisions processes
+- variables - BAYESIAN NETWORKS, CONSTRAINT SATISFACTION.
+- logic
+- 
+- Optimization, find the best discrete object or find best vector of real numbers
+- Problem: computing edit distance
